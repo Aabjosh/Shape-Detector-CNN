@@ -5,10 +5,28 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
+from configManager_gui import get_config
+import os
+import json
 
 # initial work
-BATCH_SIZE = 2
-EPOCHS = 30
+
+# only run when in this file directly
+if __name__ == "__main__":
+    config = get_config()
+
+if os.path.exists("config.json"):
+        with open("config.json", "r") as f:
+            config = json.load(f)["current"]
+else:
+    print("file not found.")
+
+BATCH_SIZE = config["batch_size"]
+EPOCHS = config["epochs"]
+LEARNING_RATE = config["learning_rate"]
+
+print(f"Batch Size: {BATCH_SIZE}\nEpochs: {EPOCHS}\nLearning Rate (lr): {LEARNING_RATE}")
+
 SAMPLE_DIMENSION = 64
 DIRECTORY = "basicshapes/shapes"
 
@@ -96,7 +114,7 @@ if __name__ == "__main__":
     criterion = nn.CrossEntropyLoss()
 
     # optimizing for error
-    optimizer = optim.Adam(model.parameters(), lr=0.0005)
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
     print("Training...")
 
