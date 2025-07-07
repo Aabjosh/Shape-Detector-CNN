@@ -21,7 +21,6 @@ preprocess = transforms.Compose([
 ])
 
 train_set = datasets.ImageFolder(root=DIRECTORY, transform=preprocess)
-print(train_set.class_to_idx)
 train_loader = DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True)
 
 # create CNN
@@ -79,12 +78,17 @@ class CNN(nn.Module):
 
 # only run when in this file directly
 if __name__ == "__main__":
-        
-    # loop for training the model
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # run the model loop on GPU using CUDA cores if available, otherwise use cpu
+
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     if torch.cuda.is_available():
+        device = torch.device("cuda")
         print("USING CUDA")
+    else:
+        device = torch.device("cpu")
+        print("USING CPU")
         
     model = CNN().to(device)
 

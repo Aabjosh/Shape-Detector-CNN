@@ -1,14 +1,12 @@
 # imports
 import cv2
 import torch
-import torch.nn as nn
-import torchvision.transforms as transforms
 from PIL import Image
-import numpy as np
 import model
 
-# load model
+# load model, preferrably on GPU using CUDA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 testModel = model.CNN().to(device)
 testModel.load_state_dict(torch.load("shapeGuesser_cnn.pth", map_location=device))
 testModel.eval()
@@ -64,16 +62,16 @@ while True:
             _, predicted = torch.max(outputs, 1) # max value across dimension 1 is the index of the class
             label = classes[predicted.item()]
 
-            probabilities = torch.softmax(outputs, dim=1)
-            max_prob, predicted2 = torch.max(probabilities, 1)
-            print(f"Prediction: {label}")
-            print(f"Confidence (probability): {max_prob.item():.4f}")
-            print(outputs)
+            # probabilities = torch.softmax(outputs, dim=1)
+            # max_prob, predicted2 = torch.max(probabilities, 1)
+            # print(f"Prediction: {label}")
+            # print(f"Confidence (probability): {max_prob.item():.4f}")
+            # print(outputs)
 
             # Show prediction
             cv2.putText(frame, f"Predicted: {label}", (10, height - 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 225, 255), 2)
             cv2.imshow("Shape Guesser", frame)
-            cv2.waitKey(1000)  # Wait 1/2s to show result
+            cv2.waitKey(500)  # Wait 1/2s to show result
 
 capture.release()
 cv2.destroyAllWindows()
