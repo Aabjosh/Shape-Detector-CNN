@@ -38,7 +38,7 @@ while True:
     cv2.imshow("Shape Guesser", frame)
     keyPress = cv2.waitKey(1)
 
-    # if esc, quit. If 'C', guess
+    # if esc, quit. If 'C', guess the shape within the ROI window (below)
     if keyPress == 27:
         break
     elif keyPress == 99:
