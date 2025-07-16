@@ -1,5 +1,6 @@
-SHAPE DETECTOR CNN PROJECT
+**SHAPE DETECTOR CNN PROJECT**
 Here's a brief overview of what I have created!
+
 *What It Does:*
 The main function of this project is to detect what kind of shape a person has drawn (either a circle, square or triangle), typically on a piece of paper. On the OpenCV video feed, a box is shown surrounding the ROI field, which is captured and ran against a model that was trained on a public database of images from Kaggle (found in this repository). Following this, the most likely prediction is displayed on screen. This detection works not only for drawings, but typical high contrast examples of the aforementioned shapes. 
 
